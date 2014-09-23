@@ -7,7 +7,6 @@
  */
 package org.dspace.app.xmlui.aspect.artifactbrowser;
 
-import java.net.InetAddress;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +18,6 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.dspace.app.xmlui.utils.ContextUtil;
-import org.dspace.authorize.AuthorizeException;
 import org.dspace.core.ConfigurationManager;
 import org.dspace.core.Context;
 import org.dspace.core.Email;
@@ -28,6 +26,7 @@ import org.dspace.eperson.EPerson;
 
 /**
  * @author Scott Phillips
+ * @author Adán Román Ruiz at arvo.es
  */
 
 public class SendSolicitarCorreccionAction extends AbstractAction
@@ -67,24 +66,13 @@ public class SendSolicitarCorreccionAction extends AbstractAction
         }
 
         // Check all data is there
-        if (/*(address == null) || address.equals("")
-                ||*/ (comments == null) || comments.equals("") 
+        if ( (comments == null) || comments.equals("") 
                 || (handle == null) || handle.equals(""))
         {
             // Either the user did not fill out the form or this is the
             // first time they are visiting the page.
             Map<String,String> map = new HashMap<String,String>();
             map.put("page",page);
-
-            /*if (address == null || address.equals(""))
-            {
-                map.put("email", eperson);
-            }
-            else
-            {
-                map.put("email", address);
-            }*/
-
             map.put("comments",comments);
             map.put("handle",handle);
             
@@ -96,7 +84,6 @@ public class SendSolicitarCorreccionAction extends AbstractAction
         email.addRecipient(ConfigurationManager.getProperty("solicitarCorreccion.recipient"));
 
         email.addArgument(new Date()); // Date
-        //email.addArgument(address);    // Email
         email.addArgument(eperson);    // Logged in as
         email.addArgument(page.replace("/solicitarCorreccion/", "/handle/"));       // Referring page
         email.addArgument(agent);      // User agent

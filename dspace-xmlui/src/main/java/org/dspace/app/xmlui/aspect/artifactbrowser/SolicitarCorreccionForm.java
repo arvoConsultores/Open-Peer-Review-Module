@@ -23,15 +23,15 @@ import org.dspace.app.xmlui.wing.element.Body;
 import org.dspace.app.xmlui.wing.element.Division;
 import org.dspace.app.xmlui.wing.element.List;
 import org.dspace.app.xmlui.wing.element.PageMeta;
-import org.dspace.app.xmlui.wing.element.Text;
 import org.dspace.app.xmlui.wing.element.TextArea;
 import org.dspace.authorize.AuthorizeException;
 import org.xml.sax.SAXException;
 
 /**
- * Display to the user a simple form letting the user give feedback.
+ * Display to the user a simple form letting the user give an item error report.
  * 
  * @author Scott Phillips
+ * @author Adán Román Ruiz at arvo.es
  */
 public class SolicitarCorreccionForm extends AbstractDSpaceTransformer implements CacheableProcessingComponent
 {
@@ -69,7 +69,6 @@ public class SolicitarCorreccionForm extends AbstractDSpaceTransformer implement
      */
     public Serializable getKey() {
         
-       // String email = parameters.getParameter("email","");
         String comments = parameters.getParameter("comments","");
         String page = parameters.getParameter("page","unknown");
         String handle = parameters.getParameter("handle","unknown");
@@ -108,13 +107,7 @@ public class SolicitarCorreccionForm extends AbstractDSpaceTransformer implement
         feedback.addPara(T_para1.parameterize(parameters.getParameter("handle","unknown")));
         
         List form = feedback.addList("form",List.TYPE_FORM);
-        
-//        Text email = form.addItem().addText("email");
-//        email.setAutofocus("autofocus");
-//        email.setLabel(T_email);
-//        email.setHelp(T_email_help);
-//        email.setValue(parameters.getParameter("email",""));
-        
+               
         TextArea comments = form.addItem().addTextArea("comments");
         comments.setLabel(T_comments);
         comments.setValue(parameters.getParameter("comments",""));
